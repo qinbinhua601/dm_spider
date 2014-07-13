@@ -73,7 +73,7 @@ def isPassEvent(eventTitle):
 #   
 def getPid(sid,priceRegion):
     try:
-        conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+        conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
         cur = conn.cursor()
         cur.execute("select pid from mp3_price_section  where sid=%s and priceRegion=%s",(sid,priceRegion))
         if cur.rowcount:
@@ -96,7 +96,7 @@ def getPid(sid,priceRegion):
 #   
 def getSeidByTitle(sid,eventTitle):
     try:
-        conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+        conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
         cur = conn.cursor()
         cur.execute("select seid from mp3_spider_event where sid=%s and eventTitle=%s",(sid,eventTitle))
         if cur.rowcount:
@@ -119,7 +119,7 @@ def getSeidByTitle(sid,eventTitle):
 #   
 def getVeid(veName,siteUrl='http://www.damai.cn/'):
     try:
-        conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+        conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
         cur=conn.cursor()
         cur.execute("SELECT veid FROM mp3_spider_vemapping WHERE spiderVename=%s and siteUrl=%s;",(veName,siteUrl))
         if cur.rowcount:
@@ -142,7 +142,7 @@ def getVeid(veName,siteUrl='http://www.damai.cn/'):
 #   
 def getSid(siteUrl,actName,fromUrl):
     try:
-        conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+        conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
         cur=conn.cursor()
         cur.execute("select sid from mp3_spider_activity  where siteUrl=%s and actName=%s and fromUrl=%s;",(siteUrl,actName,fromUrl))
         if cur.rowcount:
@@ -388,7 +388,7 @@ for i in urls:
 #START mp3_spider_activity
     if sid:
         try:
-            conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+            conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
             cur = conn.cursor()
             cur.execute("update mp3_spider_activity set veid=%s,actTime=%s,catName=%s,actImgUrl=%s,currentUrl=%s,status=%s,editStatus=%s,addStatus=%s,hasSeatMap=%s,isSeatable=%s,saleStatus=%s,veName=%s,saleName=%s,createDT=%s where sid=%s;",(veid,actTime,catName,actImgUrl,currentUrl,status,editStatus,addStatus,hasSeatMap,isSeatable,saleStatus,veName,saleName,getNow(),sid))
         except Exception as err:
@@ -403,7 +403,7 @@ for i in urls:
             conn.close()            
     else:
         try:
-            conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+            conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
             cur = conn.cursor()
             cur.execute("insert into mp3_spider_activity(siteUrl,veid,actTime,actName,catName,actImgUrl,fromUrl,currentUrl,status,editStatus,addStatus,hasSeatMap,isSeatable,saleStatus,veName,saleName,createDT) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);",(siteUrl,veid,actTime,actName,catName,actImgUrl,fromUrl,currentUrl,status,editStatus,addStatus,hasSeatMap,isSeatable,saleStatus,veName,saleName,getNow()))
             
@@ -529,7 +529,7 @@ for i in urls:
         qlog.qPrint('-----------------------------')
         if seid:
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 cur.execute("update mp3_spider_event set eventSeries=%s,priceRegion=%s,eventTitle=%s,isSaleOut=%s where seid=%s",(eventSeries,priceRegion,eventTitle,isSaleOut,seid))
             except Exception as err:
@@ -544,7 +544,7 @@ for i in urls:
                 conn.close()                
         else:
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 cur.execute("insert into mp3_spider_event(sid,eventSeries,priceRegion,eventTitle,eventDatetime,isSaleOut) values(%s,%s,%s,%s,%s,%s)",(sid,eventSeries,priceRegion,eventTitle,eventDatetime,isSaleOut))
             except Exception as err:
@@ -570,7 +570,7 @@ for i in urls:
         qlog.qPrint("pid 1:%s"%pid)
         if pid:
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 cur.execute("update mp3_price_section set priceRegion=%s where pid=%s",(priceRegion,pid))
                 cur.execute("update mp3_spider_event set pid=%s where sid=%s and priceRegion=%s",(pid,sid,priceRegion))
@@ -587,7 +587,7 @@ for i in urls:
                 conn.close()
         else:
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 cur.execute("insert into mp3_price_section(sid,priceRegion) values(%s,%s)",(sid,priceRegion))
                 pid =getPid(sid,priceRegion)
@@ -615,7 +615,7 @@ for i in urls:
 #START mp3_price_section_detail
         if seid:
             # try:
-            #     conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+            #     conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
             #     cur = conn.cursor()
             #     for facePrice in newPriceR:
             #         cur.execute("update mp3_price_section_detail set regionName=%s,facePrice=%s,seatNums=%s,remark=%s where pid = %s",('',facePrice,0,'',seid))
@@ -631,7 +631,7 @@ for i in urls:
         else:
             #如果不存在，插入到[mp3_price_section_detail]
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 for i in list(range(0,len(newPriceR))):
                     facePrice = newPriceR[i]
@@ -657,7 +657,7 @@ for i in urls:
         qlog.qPrint("debug seid : %s "%seid)
         if seid:
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 for i in list(range(0,len(statuses))):
                     cur.execute("update mp3_spider_tickets set fromUrl=%s,updateTime=%s,saleStatus=%s where seid=%s and facePrice=%s",(fromUrl,getNow(),statuses[i],seid,newPriceR[i]))
@@ -673,7 +673,7 @@ for i in urls:
                 conn.close()
         else:
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 for i in list(range(0,len(statuses))):
                     cur.execute("insert into mp3_spider_tickets(seid,fromUrl,facePrice,updateTime,saleStatus) values(%s,%s,%s,%s,%s)",(getSeidByTitle(sid,eventTitle),fromUrl,newPriceR[i],getNow(),statuses[i]))
@@ -797,7 +797,7 @@ if len(urls_error)>0:
 #START mp3_spider_activity
         if sid:
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 cur.execute("update mp3_spider_activity set veid=%s,actTime=%s,catName=%s,actImgUrl=%s,currentUrl=%s,status=%s,editStatus=%s,addStatus=%s,hasSeatMap=%s,isSeatable=%s,saleStatus=%s,veName=%s,saleName=%s,createDT=%s where sid=%s;",(veid,actTime,catName,actImgUrl,currentUrl,status,editStatus,addStatus,hasSeatMap,isSeatable,saleStatus,veName,saleName,getNow(),sid))
             except Exception as err:
@@ -812,7 +812,7 @@ if len(urls_error)>0:
                 conn.close()            
         else:
             try:
-                conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 cur = conn.cursor()
                 cur.execute("insert into mp3_spider_activity(siteUrl,veid,actTime,actName,catName,actImgUrl,fromUrl,currentUrl,status,editStatus,addStatus,hasSeatMap,isSeatable,saleStatus,veName,saleName,createDT) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);",(siteUrl,veid,actTime,actName,catName,actImgUrl,fromUrl,currentUrl,status,editStatus,addStatus,hasSeatMap,isSeatable,saleStatus,veName,saleName,getNow()))
                 
@@ -938,7 +938,7 @@ if len(urls_error)>0:
             qlog.qPrint('-----------------------------')
             if seid:
                 try:
-                    conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                    conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                     cur = conn.cursor()
                     cur.execute("update mp3_spider_event set eventSeries=%s,priceRegion=%s,eventTitle=%s,isSaleOut=%s where seid=%s",(eventSeries,priceRegion,eventTitle,isSaleOut,seid))
                 except Exception as err:
@@ -953,7 +953,7 @@ if len(urls_error)>0:
                     conn.close()                
             else:
                 try:
-                    conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                    conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                     cur = conn.cursor()
                     cur.execute("insert into mp3_spider_event(sid,eventSeries,priceRegion,eventTitle,eventDatetime,isSaleOut) values(%s,%s,%s,%s,%s,%s)",(sid,eventSeries,priceRegion,eventTitle,eventDatetime,isSaleOut))
                 except Exception as err:
@@ -979,7 +979,7 @@ if len(urls_error)>0:
             qlog.qPrint("pid 1:%s"%pid)
             if pid:
                 try:
-                    conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                    conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                     cur = conn.cursor()
                     cur.execute("update mp3_price_section set priceRegion=%s where pid=%s",(priceRegion,pid))
                     cur.execute("update mp3_spider_event set pid=%s where sid=%s and priceRegion=%s",(pid,sid,priceRegion))
@@ -996,7 +996,7 @@ if len(urls_error)>0:
                     conn.close()
             else:
                 try:
-                    conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                    conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                     cur = conn.cursor()
                     cur.execute("insert into mp3_price_section(sid,priceRegion) values(%s,%s)",(sid,priceRegion))
                     pid =getPid(sid,priceRegion)
@@ -1024,7 +1024,7 @@ if len(urls_error)>0:
 #START mp3_price_section_detail
             if seid:
                 # try:
-                #     conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                #     conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                 #     cur = conn.cursor()
                 #     for facePrice in newPriceR:
                 #         cur.execute("update mp3_price_section_detail set regionName=%s,facePrice=%s,seatNums=%s,remark=%s where pid = %s",('',facePrice,0,'',seid))
@@ -1040,7 +1040,7 @@ if len(urls_error)>0:
             else:
                 #如果不存在，插入到[mp3_price_section_detail]
                 try:
-                    conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                    conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                     cur = conn.cursor()
                     for i in list(range(0,len(newPriceR))):
                         facePrice = newPriceR[i]
@@ -1066,7 +1066,7 @@ if len(urls_error)>0:
             qlog.qPrint("debug seid : %s "%seid)
             if seid:
                 try:
-                    conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                    conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                     cur = conn.cursor()
                     for i in list(range(0,len(statuses))):
                         cur.execute("update mp3_spider_tickets set fromUrl=%s,updateTime=%s,saleStatus=%s where seid=%s and facePrice=%s",(fromUrl,getNow(),statuses[i],seid,newPriceR[i]))
@@ -1082,7 +1082,7 @@ if len(urls_error)>0:
                     conn.close()
             else:
                 try:
-                    conn = pymysql.connect(host='localhost', user='root', passwd='root', db='xishiqu',charset='utf8')
+                    conn = pymysql.connect(host='localhost', user='your_username', passwd='your_password', db='your_database',charset='utf8')
                     cur = conn.cursor()
                     for i in list(range(0,len(statuses))):
                         cur.execute("insert into mp3_spider_tickets(seid,fromUrl,facePrice,updateTime,saleStatus) values(%s,%s,%s,%s,%s)",(getSeidByTitle(sid,eventTitle),fromUrl,newPriceR[i],getNow(),statuses[i]))
